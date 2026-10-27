@@ -1,9 +1,5 @@
 #include <FastLED.h>
 
-const int starboard_outboard = 27;
-const int starboard_inboard = 26;
-const int port_outboard = 19;
-const int port_inboard = 18;
 const int hp_1 = 8;
 const int hp_2 = 9;
 const int hp_3 = 4;
@@ -58,7 +54,6 @@ void lightB(int brightness) {
 }
 
 void initShip() {
-    pinMode(starboard_outboard, OUTPUT);
     pinMode(hp_1, OUTPUT);
     pinMode(hp_2, OUTPUT);
     pinMode(hp_3, OUTPUT);
