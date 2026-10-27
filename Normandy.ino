@@ -1,31 +1,66 @@
+#include <FastLED.h>
+
 const int starboard_outboard = 27;
 const int starboard_inboard = 26;
 const int port_outboard = 19;
 const int port_inboard = 18;
+const int hp_1 = 8;
+const int hp_2 = 9;
+const int hp_3 = 4;
+const int hp_4 = 5;
+
 
 void setup() {
-  // put your setup code here, to run once:
-    pinMode(starboard_outboard, OUTPUT);
+    initShip();
 }
 
 void loop() {
-  // put your main code here, to run repeatedly:
-  go();
-  delay(50);
-  stop();
-  delay(950);
+  // service the engine animation frequently
+  animateEngines();
 }
 
-void go() {
-  analogWrite(starboard_outboard, 255);
-  analogWrite(starboard_inboard, 255);
-  analogWrite(port_outboard, 255);
-  analogWrite(port_inboard, 255);
+void animateEngines() { // consider allowing a variable to be passed for intensity
+  // Use millis() scaled down as the time coordinate for the noise function
+  uint32_t timeCoord = millis() * 1; // Multiplier controls the flicker speed
+  
+  // inoise8 generates a smooth value between 0 and 255
+  uint8_t noiseVal = inoise8(timeCoord);
+  uint8_t noiseVal2 = inoise8(timeCoord + 55555);
+
+  // Map the noise output to a rocket brightness
+  // 150 to 255 seems a match for the loading screen animations
+  // 0 to 255 and a time factor of .02 to .04 could animate porthole lights
+  int brightness = map(noiseVal, 0, 255, 150, 255);
+  int brightness2 = map(noiseVal2, 0, 255, 150, 255);
+
+  lightA(brightness);
+  lightB(brightness2);
 }
 
-void stop() {
-  analogWrite(starboard_outboard, 0);
-  analogWrite(starboard_inboard, 0);
-  analogWrite(port_outboard, 0);
-  analogWrite(port_inboard, 0);
+void allOn() {
+  lightA(255);
+  lightB(255);
+}
+
+void allStop() {
+  lightA(0);
+  lightB(0);
+}
+
+void lightA(int brightness) {
+  analogWrite(hp_1, brightness);
+  digitalWrite(hp_2, LOW);
+}
+
+void lightB(int brightness) {
+  analogWrite(hp_3, brightness);
+  digitalWrite(hp_4, LOW);
+}
+
+void initShip() {
+    pinMode(starboard_outboard, OUTPUT);
+    pinMode(hp_1, OUTPUT);
+    pinMode(hp_2, OUTPUT);
+    pinMode(hp_3, OUTPUT);
+    pinMode(hp_4, OUTPUT);
 }
