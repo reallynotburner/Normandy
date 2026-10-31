@@ -1,9 +1,9 @@
 #include <FastLED.h>
 
 const int hp_1 = 8;
-const int hp_2 = 9;
+// const int hp_2 = 9;
 const int hp_3 = 4;
-const int hp_4 = 5;
+// const int hp_4 = 5;
 
 
 void setup() {
@@ -45,17 +45,17 @@ void allStop() {
 
 void lightA(int brightness) {
   analogWrite(hp_1, brightness);
-  digitalWrite(hp_2, LOW);
+  // digitalWrite(hp_2, LOW);
 }
 
 void lightB(int brightness) {
   analogWrite(hp_3, brightness);
-  digitalWrite(hp_4, LOW);
+  // digitalWrite(hp_4, LOW);
 }
 
 void initShip() {
     pinMode(hp_1, OUTPUT);
-    pinMode(hp_2, OUTPUT);
+    // pinMode(hp_2, OUTPUT);
     pinMode(hp_3, OUTPUT);
-    pinMode(hp_4, OUTPUT);
+    // pinMode(hp_4, OUTPUT);
 }
